@@ -73,10 +73,12 @@ export const createUrl = async (req: Request, res: Response) => {
         res.status(201).json(urlDoc);
     } catch (error) {
         if (error.name === 'ValidationError') {
+            // Duplicate slug name
             if (error.errors.slug?.kind === 'unique') {
                 return res.status(400).json('That slug name is already in use');
             }
 
+            // Invalid url format
             if (error.errors.url) {
                 return res.status(400).json((error.errors.url.reason as Error).message);
             }
