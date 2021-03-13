@@ -60,8 +60,13 @@ export const createUrl = async (req: Request, res: Response) => {
             }
         }
 
-        // If there is not a protocol included in the url, add one
+        // Add the http protocol if there is no protocol in the url
         if (url.indexOf('http://') < 0 && url.indexOf('https://') < 0) {
+            // Prepend www. if it is not in the url
+            if (url.indexOf('www.') < 0) {
+                url = `www.${url}`;
+            }
+
             url = `http://${url}`;
         }
 
