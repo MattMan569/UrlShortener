@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import nanoid from 'nanoid';
-import escape from 'escape-string-regexp';
 import Url from './../../db/models/urlModel';
 
 /** Provide details about the service */
@@ -18,7 +17,14 @@ export const root = async (req: Request, res: Response) => {
 
 /** Provide details on the provided short url */
 export const information = async (req: Request, res: Response) => {
-    const url = await Url.findOne({ slug: new RegExp(escape(req.params.id), 'i') });
+    let slug = req.params.id;
+
+    if (!slug) {
+        return res.status(400).json('Missing slug');
+    }
+
+    slug = slug.toLowerCase();
+    const url = await Url.findOne({ slug });
 
     if (!url) {
         return res.status(404).json('Invalid slug');
@@ -32,7 +38,14 @@ export const information = async (req: Request, res: Response) => {
 
 /** Redirect to the original url from the short id */
 export const redirect = async (req: Request, res: Response) => {
-    const url = await Url.findOne({ slug: req.params.id });
+    let slug = req.params.id;
+
+    if (!slug) {
+        return res.status(400).json('Missing slug');
+    }
+
+    slug = slug.toLowerCase();
+    const url = await Url.findOne({ slug });
 
     if (!url) {
         return res.status(404).json('Invalid slug');
@@ -44,8 +57,7 @@ export const redirect = async (req: Request, res: Response) => {
 /** Create a new short url */
 export const createUrl = async (req: Request, res: Response) => {
     try {
-        const slug: string = req.body.slug;
-        let url: string = req.body.url;
+        let { url, slug }: { url: string, slug: string } = req.body;
 
         if (!url) {
             res.status(400).json('You must include a url');
@@ -53,9 +65,9 @@ export const createUrl = async (req: Request, res: Response) => {
 
         // Check if the provided slug is already being used
         if (slug) {
-            const collision = await Url.find({ slug: new RegExp(escape(slug), 'i') });
+            slug = slug.toLowerCase();
+            const collision = await Url.find({ slug });
             if (collision.length > 0) {
-                console.log(collision);
                 return res.status(400).json('That slug name is already in use');
             }
         }
@@ -71,7 +83,7 @@ export const createUrl = async (req: Request, res: Response) => {
         }
 
         const urlDoc = await Url.create({
-            slug: slug || nanoid.nanoid(10),
+            slug: slug || nanoid.nanoid(10).toLowerCase(),
             url,
         });
 
