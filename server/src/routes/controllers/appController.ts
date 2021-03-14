@@ -63,13 +63,8 @@ export const createUrl = async (req: Request, res: Response) => {
             res.status(400).json('You must include a url');
         }
 
-        // Check if the provided slug is already being used
         if (slug) {
             slug = slug.toLowerCase();
-            const collision = await Url.find({ slug });
-            if (collision.length > 0) {
-                return res.status(400).json('That slug name is already in use');
-            }
         }
 
         // Add the http protocol if there is no protocol in the url
@@ -86,6 +81,8 @@ export const createUrl = async (req: Request, res: Response) => {
             slug: slug || nanoid.nanoid(10).toLowerCase(),
             url,
         });
+
+        console.log(urlDoc._id);
 
         res.status(201).json(urlDoc);
     } catch (error) {
