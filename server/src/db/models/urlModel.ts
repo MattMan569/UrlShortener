@@ -5,6 +5,7 @@ import IUrl from './../../../../types/url';
 
 // Define document methods
 export interface IUrlDocument extends Document, IUrl {
+    _id: string;
 }
 
 // Define model statics

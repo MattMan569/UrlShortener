@@ -1,4 +1,7 @@
 export interface IUrl {
+    /** Mongoose document id */
+    _id: string;
+
     /** The short url */
     slug: string;
 
