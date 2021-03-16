@@ -60,7 +60,7 @@ export const createUrl = async (req: Request, res: Response) => {
         let { url, slug }: { url: string, slug: string } = req.body;
 
         if (!url) {
-            res.status(400).json('You must include a url');
+            return res.status(400).json('You must include a url');
         }
 
         if (slug) {
