@@ -11,7 +11,7 @@ export const root = async (req: Request, res: Response) => {
             urlInfo: 'GET /url/:id - Show information about the provided short url',
             redirect: 'GET /:id - Redirect to the provided short url\'s original url',
             create: 'POST /url body:{ slug?: string, url: string } - Create a short url to the provided url, optionally with a custom slug',
-        }
+        },
     });
 };
 
