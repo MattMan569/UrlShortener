@@ -97,11 +97,11 @@ export const createUrl = async (req: Request, res: Response) => {
                 return res.status(400).json((error.errors.url.reason as Error).message);
             }
 
-            console.log('Unhandled ValidationError', error);
+            console.error('Unhandled ValidationError\n', error);
             return res.status(400).json('Unhandled ValidationError');
         }
 
-        console.error('Unhandeled createUrl error', error);
+        console.error('Unhandeled createUrl error\n', error);
         res.status(500).json('Unhandled createUrl error');
     }
 };
