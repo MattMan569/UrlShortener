@@ -102,15 +102,10 @@
     "component-selector": [true, "element", "app", "kebab-case"],
     "trailing-comma": [
       true,
-      "attribute",
-      "app",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "app",
-      "kebab-case"
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
     ]
   }
 }
