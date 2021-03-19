@@ -11,18 +11,27 @@ export class UrlService {
 
   constructor(private http: HttpClient) { }
 
-  /** Create a new short url */
-  createUrl(url: string, slug?: string): Promise<IUrl> {
-    return new Promise<IUrl>((resolve) => {
+  /**
+   * Create a new short url.
+   *
+   * Return the link to the redirection page on success,
+   * otherwise return the error
+   */
+  createUrl(url: string, slug?: string): Promise<string | HttpErrorResponse> {
+    return new Promise<string | HttpErrorResponse>((resolve, reject) => {
+      if (!url) {
+        return reject('Missing url');
+      }
+
       // Typescript bug https://github.com/microsoft/TypeScript/issues/43053
+      // FIXME when the bug is fixed
       // tslint:disable-next-line: deprecation
       this.http.post<IUrl>(this.apiUrl, { url, slug }).subscribe({
         next: (data) => {
-          resolve(data);
+          resolve(`${environment.apiUrl}/${data.slug}`);
         },
         error: (error: HttpErrorResponse) => {
-          // TODO remove console
-          console.error(error.message);
+          resolve(error);
         },
       });
     });

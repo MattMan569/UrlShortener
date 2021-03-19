@@ -1,19 +1,56 @@
-<header>
-  <h1>UrlShortener</h1>
-</header>
+<div id="app">
+  <header>
+    <h1>UrlShortener</h1>
+  </header>
 
-<main>
-  <form [formGroup]="form" (ngSubmit)="createUrl()">
-    <label for="url">Url</label>
-    <input type="text" name="url" id="url" formControlName="url" />
+  <main>
+    <div id="error">
+      <p *ngIf="this.error">{{ this.error }}</p>
+    </div>
 
-    <label for="slug">Slug</label>
-    <input type="text" name="slug" id="slug" formControlName="slug" />
+    <form
+      [formGroup]="form"
+      (ngSubmit)="createUrl()"
+      *ngIf="!this.redirectUrl; else redirect"
+    >
+      <input
+        type="text"
+        placeholder="Enter a URL"
+        autocomplete="off"
+        name="url"
+        id="url"
+        formControlName="url"
+      />
+      <br />
 
-    <button type="submit">Create</button>
-  </form>
+      <input
+        type="text"
+        placeholder="Enter a slug (optional)"
+        autocomplete="off"
+        name="slug"
+        id="slug"
+        formControlName="slug"
+      />
+      <br />
 
-  <pre>
-    {{ response | json }}
-  </pre>
-</main>
+      <button type="submit">Create</button>
+    </form>
+
+    <ng-template #redirect>
+      <div id="redirect">
+        <p>Your short url:</p>
+        <div>
+          <a href="{{ this.redirectUrl }}">{{ this.redirectUrl }}</a>
+          <button
+            type="button"
+            id="copy"
+            ngxClipboard
+            [cbContent]="this.redirectUrl"
+          >
+            Copy
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </main>
+</div>

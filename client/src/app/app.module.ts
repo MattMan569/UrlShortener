@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { ClipboardModule } from 'ngx-clipboard';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -15,6 +17,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ClipboardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

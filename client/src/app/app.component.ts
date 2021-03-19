@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { UrlService } from './url.service';
 
 @Component({
@@ -10,9 +11,10 @@ import { UrlService } from './url.service';
 export class AppComponent implements OnInit {
   title = 'client';
   form!: FormGroup;
-  response?: any;
+  redirectUrl?: string;
+  error?: string;
 
-  constructor(private urlService: UrlService) { }
+  constructor(private urlService: UrlService, private renderer: Renderer2) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -32,6 +34,18 @@ export class AppComponent implements OnInit {
   }
 
   async createUrl(): Promise<void> {
-    this.response = await this.urlService.createUrl(this.form.controls.url.value, this.form.controls.slug.value);
+    try {
+      const response = await this.urlService.createUrl(this.form.controls.url.value, this.form.controls.slug.value);
+      if (response instanceof HttpErrorResponse) {
+        // TODO error handling
+        this.error = response.message;
+        console.error('error', this.error);
+        return;
+      }
+      this.error = '';
+      this.redirectUrl = response;
+    } catch (error) {
+      this.error = error;
+    }
   }
 }

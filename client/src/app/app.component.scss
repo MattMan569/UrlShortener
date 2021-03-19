@@ -1,6 +1,127 @@
+#app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 header {
-  h1 {
-    margin: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: min(4vw, 32px);
+}
+
+main {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+button {
+  margin: 1rem;
+  padding: 1rem 5rem;
+  border: none;
+  font-size: 125%;
+  color: white;
+  background-color: #d87093;
+  transition: background-color 0.15s ease;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: #aa5974;
+  }
+
+  &:active {
+    background-color: #7c4054;
+  }
+}
+
+#error {
+  flex: 1;
+  display: flex;
+  align-items: center;
+
+  p {
+    padding: 0.5rem;
+    background-color: #a52929;
+    color: white;
+  }
+}
+
+form {
+  flex: 3;
+  text-align: center;
+
+  input {
+    width: 90vw;
+    max-width: 75ch;
+    padding: 1rem;
+    border: none;
+    border-bottom: 2px white solid;
+    transition: border-bottom 0.5s ease;
+
     text-align: center;
+    color: lightgray;
+    font-size: 125%;
+    background-color: transparent;
+
+    &:focus {
+      outline: none;
+      border-bottom: 2px #d87093 solid;
+    }
+  }
+}
+
+#redirect {
+  text-align: center;
+  flex: 3;
+
+  p {
+    font-size: 125%;
+    margin-bottom: 1rem;
+  }
+
+  a {
+    &,
+    &:link,
+    &:visited,
+    &:hover,
+    &:active {
+      color: white;
+    }
+  }
+
+  // Small screens
+  > div {
+    a {
+      display: block;
+    }
+  }
+
+  // Large screens
+  @media (min-width: 769px) {
+    > div {
+      display: grid;
+      grid-auto-flow: row;
+      grid-template-columns: 1fr auto 1fr;
+      justify-items: center;
+      align-items: center;
+
+      a {
+        grid-column-start: 2;
+      }
+
+      button {
+        margin: 0 0 0 1rem;
+        padding: 0.5rem 1rem;
+      }
+    }
   }
 }
