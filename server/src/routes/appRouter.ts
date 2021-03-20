@@ -3,10 +3,11 @@ import appController from './controllers/appController';
 
 export const appRouter = Router();
 
-appRouter.get('/', appController.root);
-appRouter.get('/url/:id', appController.information);
-appRouter.get('/:id', appController.redirect);
+appRouter.get('/', appController.client);
+appRouter.get('/api', appController.apiInformation);
+appRouter.get('/api/url/:id', appController.urlInformation);
+appRouter.get('/api/:id', appController.redirect);
 
-appRouter.post('/url', appController.createUrl);
+appRouter.post('/api/url', appController.createUrl);
 
 export default appRouter;

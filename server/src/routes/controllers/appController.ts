@@ -2,8 +2,13 @@ import { Request, Response } from 'express';
 import nanoid from 'nanoid';
 import Url from './../../db/models/urlModel';
 
+/** Send the Angular client */
+export const client = async (req: Request, res: Response) => {
+    res.sendFile(__dirname + './../../../client/dist/client/index.html');
+};
+
 /** Provide details about the service */
-export const root = async (req: Request, res: Response) => {
+export const apiInformation = async (req: Request, res: Response) => {
     res.json({
         message: 'Short url creation and redirection service',
         routes: {
@@ -16,7 +21,7 @@ export const root = async (req: Request, res: Response) => {
 };
 
 /** Provide details on the provided short url */
-export const information = async (req: Request, res: Response) => {
+export const urlInformation = async (req: Request, res: Response) => {
     let slug = req.params.id;
 
     if (!slug) {
@@ -107,8 +112,9 @@ export const createUrl = async (req: Request, res: Response) => {
 };
 
 export default {
-    root,
-    information,
+    client,
+    apiInformation,
+    urlInformation,
     redirect,
     createUrl,
 };

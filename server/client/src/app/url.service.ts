@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../environments/environment';
-import IUrl from './../../../types/url';
+import IUrl from '../../../types/url';
 
 @Injectable({
   providedIn: 'root',

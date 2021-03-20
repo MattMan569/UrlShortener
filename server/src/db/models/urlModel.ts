@@ -1,7 +1,7 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 import mongooseUniqueValidator from 'mongoose-unique-validator';
 import validator from 'validator';
-import IUrl from './../../../../types/url';
+import IUrl from '../../../types/url';
 
 // Define document methods
 export interface IUrlDocument extends Document, IUrl {
