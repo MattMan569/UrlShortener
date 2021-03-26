@@ -28,7 +28,7 @@ export class UrlService {
       // tslint:disable-next-line: deprecation
       this.http.post<IUrl>(this.apiUrl, { url, slug }).subscribe({
         next: (data) => {
-          resolve(`${environment.apiUrl}/${data.slug}`);
+          resolve(`${environment.serverUrl}/${data.slug}`);
         },
         error: (error: HttpErrorResponse) => {
           resolve(error);
