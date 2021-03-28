@@ -15,6 +15,7 @@ app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             ...csp,
+            'default-src': ['\'self\'', 'matthewpolsom.ca'],
         },
     },
 }));
